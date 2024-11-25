@@ -1,5 +1,6 @@
 import React from 'react'
-import PasswordInput from '../../components/input/PasswordInput'
+import PasswordInput from "../../components/input/PasswordInput";
+
 
 export default function Login() {
   return (
