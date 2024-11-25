@@ -327,5 +327,11 @@ app.get("/travel-stories/filter",authenticateToken,async(req,res)=>{
 })
 
 
+
+app.get("/",async(req,res)=>{
+  res.send("hello")
+})
+
+
 app.listen(8000)
 module.exports=app;
