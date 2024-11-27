@@ -1,8 +1,52 @@
-import React from 'react'
+import React, { isValidElement } from 'react'
+import { useState } from 'react'
 import PasswordInput from '../../components/input/PasswordInput'
+import { useNavigate } from 'react-router-dom'
+import { isvalidateEmail } from '../../utils/helper'
+import axiosInstance from '../../utils/axiosinstance'
 
 
 export default function Login() {
+  const [email, setemail] = useState("")
+  const [password, setpassword] = useState("")
+  const [error, seterror] = useState(null)
+  const navigate=useNavigate()
+
+  const handleLogin=async(e)=>{
+    e.preventDefault()
+    if(!isvalidateEmail(email)){
+      seterror("Please enter a valid email address.")
+      return 
+    }
+
+    if(!password){
+      seterror("Please enter the password")
+      return
+    }
+    seterror("")
+
+    // login api call
+    try {
+      const response=await axiosInstance.post("/login",{
+        email:email,
+        password:password
+      })
+    if(response.data && response.data.accessToken){
+      localStorage.setItem("token",response.data.accessToken)
+      navigate("/dashboard")
+    }
+    
+    
+    } catch (error) {
+      if(error.response && error.response.data && error.response.data.message) {
+        seterror(error.response.data.message)
+      }
+      else{
+        seterror("An unexpecteed error occurred. Please try again.")
+      }
+    }
+  }
+
   return (
     <div className='h-screen bg-cyan-50 overflow-hidden relative'>
       <div className='login-ui-box right-10 -top-40'/>
@@ -14,13 +58,19 @@ export default function Login() {
           </div>
           </div>
           <div className='w-2/4 h-[75vh] bg-white rounded-r-lg relative p-16 shadow-lg shadow-cyan-200/20'>
-            <form onSubmit={()=>{}}>
+            <form onSubmit={handleLogin}>
               <h4 className='text-2xl font-semibold mb-7'>Login</h4>
-              <input type="text" placeholder='Email' className='input-box'/>
+              <input type="text" placeholder='Email' className='input-box'
+              value={email}
+              onChange={({target})=>{setemail(target.value)}}
+              />
 
-              <PasswordInput/>
+              <PasswordInput value={password} onChange={({target})=>{setpassword(target.value)}}/>
 
-              <button type='submit' className='btn-primary'>
+                {error && <p className='text-red-500 text-xs pb-1'>{error}</p>}
+
+
+              <button type='submit' className='btn-primary' >
                 Login
               </button>
               <p className='text-xs text-slate-500 text-center my-4'>Or</p>
