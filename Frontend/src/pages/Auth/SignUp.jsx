@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { isvalidateEmail } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosinstance';
 
+
+
 export default function SignUp() {
   const [name, setName] = useState('');
   const [email, setemail] = useState('');
