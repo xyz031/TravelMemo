@@ -1,6 +1,6 @@
 import React from 'react'
 
-import logo from "../assets/images/Logo1.png";
+import logo from "../assets/images/logo1.png";
 
 import { useNavigate } from 'react-router-dom'
 import ProfileInfo from './Cards/ProfileInfo'
