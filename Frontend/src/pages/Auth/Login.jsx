@@ -77,7 +77,7 @@ export default function Login() {
               <button 
               type="submit"
               className='btn-primary btn-light'
-              onClick={()=>{Navigate("/signUp")}}>Create Account</button>
+              onClick={()=>{navigate("/signUp")}}>Create Account</button>
             </form>
           </div>
         
